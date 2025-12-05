@@ -1,31 +1,69 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "MySQL RDS instance"
+Description: "MySQL RDS instance with security group"
 
 Parameters:
   DBName:
     Type: String
     Default: "dhruvdb"
+    Description: "Database name"
+  
   DBUsername:
     Type: String
     Default: "admin"
+    Description: "Master username"
+  
   DBPassword:
     Type: String
     NoEcho: true
+    Description: "Master password"
+    MinLength: 8
+  
   DBInstanceClass:
     Type: String
     Default: "db.t3.micro"
+    Description: "Database instance type"
+  
+  VPCId:
+    Type: AWS::EC2::VPC::Id
+    Description: "VPC ID where RDS will be deployed"
+  
   DBSubnetIds:
     Type: List<AWS::EC2::Subnet::Id>
+    Description: "Private subnet IDs for RDS (minimum 2 in different AZs)"
 
 Resources:
+  # Security Group for RDS
+  RDSSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Allow MySQL traffic on port 3306"
+      VpcId: !Ref VPCId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: "dhruv-rds-sg"
+
+  # DB Subnet Group
   MyDBSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
     Properties:
-      DBSubnetGroupDescription: "Private subnets for RDS"
+      DBSubnetGroupDescription: "Subnet group for RDS instance"
       SubnetIds: !Ref DBSubnetIds
+      Tags:
+        - Key: Name
+          Value: "dhruv-db-subnet-group"
 
+  # RDS Instance
   MyRDSInstance:
     Type: AWS::RDS::DBInstance
+    DeletionPolicy: Delete
     Properties:
       DBName: !Ref DBName
       MasterUsername: !Ref DBUsername
@@ -33,9 +71,25 @@ Resources:
       DBInstanceClass: !Ref DBInstanceClass
       Engine: mysql
       AllocatedStorage: 20
+      StorageType: gp2
       DBSubnetGroupName: !Ref MyDBSubnetGroup
+      VPCSecurityGroups:
+        - !Ref RDSSecurityGroup
       PubliclyAccessible: true
+      BackupRetentionPeriod: 0
+      Tags:
+        - Key: Name
+          Value: "dhruv-mysql-rds"
 
 Outputs:
   RDSEndpoint:
+    Description: "RDS instance endpoint"
     Value: !GetAtt MyRDSInstance.Endpoint.Address
+  
+  RDSPort:
+    Description: "RDS instance port"
+    Value: !GetAtt MyRDSInstance.Endpoint.Port
+  
+  RDSSecurityGroupId:
+    Description: "Security Group ID for RDS"
+    Value: !Ref RDSSecurityGroup

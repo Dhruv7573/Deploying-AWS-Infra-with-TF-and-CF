@@ -14,6 +14,11 @@ Resources:
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: "dhruv-vpc"
 
   PublicSubnet:
     Type: AWS::EC2::Subnet
@@ -84,7 +89,7 @@ Resources:
       SubnetId: !Ref PublicSubnet
       SecurityGroupIds:
         - !Ref EC2SecurityGroup
-      KeyName: "dhruv-key"  # Replace with my key pair name
+      KeyName: "dhruv-key"  # Replace with your key pair name
 
 Outputs:
   VPCId:

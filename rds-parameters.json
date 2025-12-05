@@ -1,0 +1,14 @@
+[
+  {
+    "ParameterKey": "DBPassword",
+    "ParameterValue": "Admin123456"
+  },
+  {
+    "ParameterKey": "VPCId",
+    "ParameterValue": "vpc-0db35ccdeba633325"
+  },
+  {
+    "ParameterKey": "DBSubnetIds",
+    "ParameterValue": "subnet-0a1da41f0372fb75e,subnet-0a0c8ca9b2ce66918"
+  }
+]
