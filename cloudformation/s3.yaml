@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Create 3 private S3 buckets with versioning"
+
+Resources:
+  Bucket1:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: "9062297-bucket-1"
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  Bucket2:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: "9062297-bucket-2"
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  Bucket3:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: "9062297-bucket-3"
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+Outputs:
+  Bucket1Name:
+    Value: !Ref Bucket1
+  Bucket2Name:
+    Value: !Ref Bucket2
+  Bucket3Name:
+    Value: !Ref Bucket3

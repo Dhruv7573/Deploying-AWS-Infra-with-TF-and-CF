@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "MySQL RDS instance"
+
+Parameters:
+  DBName:
+    Type: String
+    Default: "dhruvdb"
+  DBUsername:
+    Type: String
+    Default: "admin"
+  DBPassword:
+    Type: String
+    NoEcho: true
+  DBInstanceClass:
+    Type: String
+    Default: "db.t3.micro"
+  DBSubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+
+Resources:
+  MyDBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: "Private subnets for RDS"
+      SubnetIds: !Ref DBSubnetIds
+
+  MyRDSInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBName: !Ref DBName
+      MasterUsername: !Ref DBUsername
+      MasterUserPassword: !Ref DBPassword
+      DBInstanceClass: !Ref DBInstanceClass
+      Engine: mysql
+      AllocatedStorage: 20
+      DBSubnetGroupName: !Ref MyDBSubnetGroup
+      PubliclyAccessible: true
+
+Outputs:
+  RDSEndpoint:
+    Value: !GetAtt MyRDSInstance.Endpoint.Address
