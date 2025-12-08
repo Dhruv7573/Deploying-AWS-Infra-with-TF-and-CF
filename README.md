@@ -97,13 +97,13 @@ cd Deploying-AWS-Infra-with-TF-and-CF/terraform
 Create a file named `terraform.tfvars` with the following content:
 
 ```hcl
-aws_region     = "us-east-1"
-bucket_prefix  = "9062297"
-ami_id         = "ami-0c02fb55956c7d316"  # Amazon Linux 2, us-east-1
-instance_type  = "t3.micro"
-db_name        = "dhruvdb"
-db_username    = "admin"
-db_password    = " "  
+aws_region     = ""
+bucket_prefix  = ""
+ami_id         = ""
+instance_type  = ""
+db_name        = ""
+db_username    = ""
+db_password    = ""  
 ```
 ## Terraform Deployment
 
@@ -138,7 +138,7 @@ Type `yes` when prompted. Deployment takes approximately 5-10 minutes.
 terraform output
 ```
 
-Expected outputs:
+Get outputs:
 - S3 bucket names
 - VPC ID
 - EC2 public IP
