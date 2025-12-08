@@ -238,14 +238,15 @@ aws cloudformation delete-stack --stack-name dhruv-s3-stack
 
 ### CloudFormation deployment in terminal:
 
-### CloudFormation deployment in AWS Console: 
-![alt text](<All stack in aws.png>)
-
 ![alt text](<rds stack.png>)
 
 ![alt text](<s3 stack.png>)
 
 ![alt text](<vpc-ec2 stack stack.png>)
+
+### CloudFormation deployment in AWS Console: 
+
+![alt text](<All stack in aws.png>)
 
 ![alt text](<S3 buckets with s3 stack.png>)
 
