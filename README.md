@@ -219,7 +219,11 @@ Type `yes` to confirm deletion of all resources.
 ```
 
 3. **Deploy RDS:**
-   - Update `rds-parameters.json` with VPC and subnet IDs from VPC stack outputs
+   - Update `rds-parameters.json` with VPC and private subnet IDs from VPC stack outputs
+```bash
+aws cloudformation describe-stacks --stack-name dhruv-vpc-stack --query 'Stacks[0].Outputs'
+```
+     
 ```bash
    aws cloudformation create-stack --stack-name dhruv-rds-stack --template-body file://cloudformation/rds.yaml --parameters file://rds-parameters.json
 ```
