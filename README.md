@@ -89,7 +89,7 @@ Deploying-AWS-Infra-with-TF-and-CF/
 
 #### 1. Clone the Repository
 ```bash
-git clone <your-repo-url>
+git clone "(https://github.com/Dhruv7573/Deploying-AWS-Infra-with-TF-and-CF.git)"
 cd Deploying-AWS-Infra-with-TF-and-CF/terraform
 ```
 
