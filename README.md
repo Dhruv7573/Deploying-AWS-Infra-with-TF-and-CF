@@ -109,6 +109,7 @@ db_password    = ""
 
 #### 3. Initialize Terraform
 ```bash
+cd terraform
 terraform init
 ```
 
